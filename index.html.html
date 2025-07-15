@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>వడ్డీ కాలిక్యులేటర్ | Arun Software Solutions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+    <img src="logo.jpg" class="logo" width="150">
+    </nav>
+    <div class="container">
+        <div class="theme-toggle">
+            <button id="themeBtn"><i class="fas fa-moon"></i></button>
+        </div>
+        
+        <h1 class="title animate-pop">వడ్డీ కాలిక్యులేటర్</h1>
+        
+        <div class="calculator animate-fade">
+            <div class="input-group">
+                <label for="principal">ప్రధాన మొత్తం (₹):</label>
+                <input type="number" id="principal" placeholder="₹ లో నమోదు చేయండి">
+            </div>
+            
+            <div class="input-group">
+                <label for="interestType">వడ్డీ రకం:</label>
+                <select id="interestType">
+                    <option value="simple">సాధారణ వడ్డీ</option>
+                    <option value="compound">చక్రవడ్డీ</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="interestValue">వడ్డీ విలువ:</label>
+                <div class="interest-input">
+                    <input type="number" id="interestValue" placeholder="వడ్డీ విలువ">
+                    <span id="interestUnit">₹ నెలకు</span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>సమయ వ్యవధి ఎంచుకోండి:</label>
+                <div class="time-options">
+                    <button class="time-btn active" data-type="manual">మాన్యువల్</button>
+                    <button class="time-btn" data-type="daterange">తేదీ పరిధి</button>
+                </div>
+            </div>
+            
+            <div class="time-input manual-time animate-fade" id="manualTime">
+                <div class="input-row">
+                    <div class="input-col">
+                        <label for="years">సంవత్సరాలు:</label>
+                        <input type="number" id="years" placeholder="0">
+                    </div>
+                    <div class="input-col">
+                        <label for="months">నెలలు:</label>
+                        <input type="number" id="months" placeholder="0">
+                    </div>
+                    <div class="input-col">
+                        <label for="days">రోజులు:</label>
+                        <input type="number" id="days" placeholder="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="time-input daterange-time animate-fade" id="daterangeTime" style="display:none;">
+                <div class="input-row">
+                    <div class="input-col">
+                        <label for="fromDate">నుండి తేదీ:</label>
+                        <input type="date" id="fromDate">
+                    </div>
+                    <div class="input-col">
+                        <label for="toDate">తేదీ వరకు:</label>
+                        <input type="date" id="toDate">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="calculate-btn animate-bounce" id="calculateBtn">లెక్కించు</button>
+        </div>
+        
+        <div class="result animate-pop" id="result" style="display:none;">
+            <h2>ఫలితాలు</h2>
+            <div class="result-item">
+                <span>ప్రధాన మొత్తం:</span>
+                <span id="resultPrincipal">₹0</span>
+            </div>
+            <div class="result-item highlight">
+                <span>వడ్డీ:</span>
+                <span id="resultInterest">₹0</span>
+            </div>
+            <div class="result-item">
+                <span>మొత్తం మొత్తం:</span>
+                <span id="resultTotal">₹0</span>
+            </div>
+            <div class="result-item bold">
+                <span>సమయ వ్యవధి:</span>
+                <span id="resultPeriod">0 రోజులు</span>
+            </div>
+        </div>
+        
+        <div class="contact animate-fade">
+            <h2 class="contact-title">CONTACT ME</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i>EMAIL: <a href="mailto:arunyadaveluvu@gmail.com">arunyadaveluvu@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> CONTACT US: <a href="tel:9398630855">9398630855</a></p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/arun.yadav.66056?mibextid=kFxxJD" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/a.r.u.n__y.a.d.a.v__/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://portfolio-arun-nwpz.vercel.app/" target="_blank"><i class="fab fa-chrome"></i></a>
+                </div>
+                    </div>
+                    <a href="Resume (1).pdf" download class="btn btn2">DOWNLOAD APP</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="copyright animate-fade">
+            COPYRIGHT @ ARUN.MADE WITH <i class="fas fa-heart heart-beat"></i> BY ARUN SOFTWARE SOLUTIONS
+        </footer>
+    </div>
+    
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const body = document.body;
+    
+    // Check saved theme or preferred color scheme
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    if (savedTheme === 'dark') {
+        body.setAttribute('data-theme', 'dark');
+        themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    
+    themeBtn.addEventListener('click', function() {
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+    
+    // Time selection toggle
+    const timeBtns = document.querySelectorAll('.time-btn');
+    const manualTime = document.getElementById('manualTime');
+    const daterangeTime = document.getElementById('daterangeTime');
+    
+    timeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            timeBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            if (this.dataset.type === 'manual') {
+                manualTime.style.display = 'block';
+                daterangeTime.style.display = 'none';
+            } else {
+                manualTime.style.display = 'none';
+                daterangeTime.style.display = 'block';
+                // Set default dates (today and 1 year ago)
+                const today = new Date();
+                const oneYearAgo = new Date();
+                oneYearAgo.setFullYear(today.getFullYear() - 1);
+                document.getElementById('fromDate').valueAsDate = oneYearAgo;
+                document.getElementById('toDate').valueAsDate = today;
+            }
+        });
+    });
+    
+    // Disable manual date input
+    document.getElementById('fromDate').readOnly = true;
+    document.getElementById('toDate').readOnly = true;
+    
+    // Calculate button
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultDiv = document.getElementById('result');
+    
+    calculateBtn.addEventListener('click', function() {
+        const principal = parseFloat(document.getElementById('principal').value);
+        const interestType = document.getElementById('interestType').value;
+        const interestPer100 = parseFloat(document.getElementById('interestValue').value);
+        
+        if (isNaN(principal) || isNaN(interestPer100) || principal <= 0 || interestPer100 <= 0) {
+            alert('దయచేసి సరైన విలువలను నమోదు చేయండి');
+            return;
+        }
+        
+        // Calculate total months (1 year = 12 months = 365 days)
+        let totalMonths = 0;
+        const activeTimeType = document.querySelector('.time-btn.active').dataset.type;
+        
+        if (activeTimeType === 'manual') {
+            const years = parseInt(document.getElementById('years').value) || 0;
+            const months = parseInt(document.getElementById('months').value) || 0;
+            const days = parseInt(document.getElementById('days').value) || 0;
+            totalMonths = (years * 12) + months + (days / (365/12)); // 365 days = 12 months
+        } else {
+            const fromDate = new Date(document.getElementById('fromDate').value);
+            const toDate = new Date(document.getElementById('toDate').value);
+            const diffTime = Math.abs(toDate - fromDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            totalMonths = diffDays / (365/12); // Convert days to months
+        }
+        
+        if (totalMonths <= 0) {
+            alert('దయచేసి సరైన సమయ వ్యవధిని నమోదు చేయండి');
+            return;
+        }
+        
+        // Calculate interest
+        const monthlyRate = interestPer100 / 100; // ₹2 per ₹100 → 0.02
+        let interest = 0;
+        
+        if (interestType === 'simple') {
+            // Simple Interest
+            interest = principal * monthlyRate * totalMonths;
+        } else {
+            // Compound Interest (monthly compounding)
+            const totalAmount = principal * Math.pow(1 + monthlyRate, totalMonths);
+            interest = totalAmount - principal;
+        }
+        
+        // Display results
+        document.getElementById('resultPrincipal').textContent = `₹${principal.toFixed(2)}`;
+        document.getElementById('resultInterest').textContent = `₹${interest.toFixed(2)}`;
+        document.getElementById('resultTotal').textContent = `₹${(principal + interest).toFixed(2)}`;
+        
+        // Format time period display (1 year = 365 days = 12 months)
+        const totalDays = Math.round(totalMonths * (365/12));
+        const displayYears = Math.floor(totalDays / 365);
+        const remainingDays = totalDays % 365;
+        let periodText = '';
+        
+        if (displayYears > 0) periodText += `${displayYears} సంవత్సర${displayYears === 1 ? 'ం' : 'ాలు'} `;
+        if (remainingDays > 0) periodText += `${remainingDays} రోజు${remainingDays === 1 ? '' : 'లు'}`;
+        
+        document.getElementById('resultPeriod').textContent = periodText || "0 రోజులు";
+        resultDiv.style.display = 'block';
+    });
+    
+    // Set default dates (today and 1 month ago)
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(today.getMonth() - 1);
+    document.getElementById('fromDate').valueAsDate = oneMonthAgo;
+    document.getElementById('toDate').valueAsDate = today;
+    
+    // Update interest unit label when interest type changes
+    document.getElementById('interestType').addEventListener('change', function() {
+        const unit = this.value === 'simple' ? '₹ నెలకు' : '₹ నెలకు (చక్రవడ్డీ)';
+        document.getElementById('interestUnit').textContent = unit;
+    });
+});
+    </script>
+</body>
+</html>
+</body>
+</html>
